@@ -4,19 +4,10 @@ DB_USER=postgres
 DB_NAME=backend
 
 .PHONY: init
-init:
+init: container
 	@echo "Creating database "$(DB_NAME)"..."
 	@
 		clear
-
-		if docker inspect --format='{{.State.Running}}' "$(CONTAINER)" 2>/dev/null | grep -q "true"; then
-			echo "$(CONTAINER)" already running."
-		else
-			echo "Running "$(CONTAINER)"..."
-			docker start "$(CONTAINER)" &>/dev/null
-		fi
-
-		sleep 1
 
 		docker exec -it "$(CONTAINER)" psql -U "$(DB_USER)" -d postgres -c \
 			"CREATE DATABASE IF NOT EXISTS "$(DB_NAME)";" &>/dev/null
@@ -34,7 +25,26 @@ init:
 	@echo "Done!"
 
 .PHONY: run
-run:
-	clear
-	sh database/start.sh
-	sh backend/start.sh
+run: container
+	@
+		clear
+
+		Roda back
+		Roda front
+
+	@
+
+.PHONY: container
+container:
+	@echo "Checking for "$(CONTAINER)" status..."
+	@
+		if docker inspect --format='{{.State.Running}}' "$(CONTAINER)" 2>/dev/null | grep -q "true"; then
+			echo "$(CONTAINER)" already running."
+		else
+			echo "Running "$(CONTAINER)"..."
+			docker start "$(CONTAINER)" &>/dev/null
+		fi
+
+		sleep 1
+	@
+
