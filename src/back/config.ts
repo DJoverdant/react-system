@@ -1,13 +1,19 @@
-const { Pool } = require('pg');
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
+
+import pkg from 'pg';
+const { Pool } = pkg;
 
 const dsn = new Pool({
-    host: process.env.HOST,
-    user: process.env.USER,
-    password: process.env.PASSWORD,
+    host: process.env.DB_HOST,
+    port: Number(process.env.DB_PORT),
+    user: process.env.DB_USER,
+    password: String(process.env.DB_PASSWORD),
     database: process.env.DATABASE,
 });
 
-module.exports = {
-  query: (text, params) => dsn.query(text, params),
+const db = {
+  query: (text: string, params?: any[]) => dsn.query(text, params),
 };
+
+export default db;
