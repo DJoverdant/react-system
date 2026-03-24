@@ -19,7 +19,7 @@ app.delete('/users/:user_id', async (req, res) => {
   
   try {
     await db.query('UPDATE client.data SET deleted_at = NOW() WHERE user_id = $1;', [user_id]);
-    res.status(200).send({ message: 'User deleted with success' });
+    res.status(204);
   } catch (err: any) {
     res.status(500).send(err.message);
   }
@@ -37,7 +37,16 @@ app.post('/users', async (req, res) => {
   };
 
   try {
-    await db.query('INSERT INTO client.data(name, cpf, age, telephone, email) VALUES($1, $2, $3, $4, $5);', 
+    const result = await db.query('\
+        INSERT INTO client.data( \
+          name, \
+          cpf, \
+          age, \
+          telephone, \
+          email \
+        ) \
+        VALUES($1, $2, $3, $4, $5) \
+        RETURNING user_id;', 
       [
         newUser.name, 
         newUser.cpf, 
@@ -46,11 +55,50 @@ app.post('/users', async (req, res) => {
         newUser.email
       ]);
 
-    res.status(201).json(newUser);
+    res.status(201).json({ UserID: result.rows[0].user_id });
   }
   catch (err: any) {
     res.status(500).send(err.message);
   }
 });
+
+  app.patch('/users/:user_id', async (req, res) => {
+    const {user_id} = req.params;
+    let data = req.body;
+
+    const newUser = { 
+      name: data.name,
+      cpf: data.cpf,
+      age: data.age,
+      telephone: data.number,
+      email: data.email
+    };
+
+    try {
+      await db.query('\
+          UPDATE client.data \
+          SET \
+            name = $2, \
+            cpf = $3, \
+            age = $4, \
+            telephone = $5, \
+            email = $6 \
+          WHERE \
+            user_id = $1;',
+        [
+          user_id, 
+          newUser.name, 
+          newUser.cpf, 
+          newUser.age, 
+          newUser.telephone, 
+          newUser.email
+        ]);
+
+      res.status(204).json();
+    }
+    catch (err: any) {
+      res.status(500).send(err.message);
+    }
+  });
 
 app.listen(PORT, () => console.log(`Servidor on na porta ${PORT}`));
