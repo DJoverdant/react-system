@@ -1,15 +1,17 @@
 .ONESHELL:
 SHELL := /bin/bash
 CONTAINER=postgres
-DB_USER=postgres
-DB_NAME=backend
+
+include .env
 
 .PHONY: init
 init: container
-	@echo "Creating database $(DB_NAME)..."
-
-	docker exec -i $(CONTAINER) psql -U $(DB_USER) -d postgres -c "DROP DATABASE $(DB_NAME);" &>/dev/null
-
+	@echo "Preparing enviroment..."
+	
+	npm install 
+	
+	echo "Creating database $(DB_NAME)..."
+	docker exec -i $(CONTAINER) psql -U $(DB_USER) -d postgres -c "DROP DATABASE IF EXISTS $(DB_NAME);" &>/dev/null
 	docker exec -i $(CONTAINER) psql -U $(DB_USER) -d postgres -c "CREATE DATABASE $(DB_NAME);" &>/dev/null
 
 	docker exec -i $(CONTAINER) psql -U $(DB_USER) -d $(DB_NAME) -c "

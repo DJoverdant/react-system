@@ -12,8 +12,6 @@ const dsn = new Pool({
     database: process.env.DATABASE,
 });
 
-const db = {
+export const db = {
   query: (text: string, params?: any[]) => dsn.query(text, params),
 };
-
-export default db;

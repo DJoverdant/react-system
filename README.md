@@ -10,9 +10,9 @@
 
     -   `DB_HOST`=localhost <br>
         `DB_PORT`=5432 <br>
+        `DB_NAME`=backend <br>
         `DB_USER`=postgres <br>
         `DB_PASSWORD`=root <br>
-        `DATABASE`=backend  <br>   
 
 - Then run:
 
