@@ -1,9 +1,7 @@
-import { useState } from 'react'
+import Button from './components/Button'
 import './styles/global.css'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
       <section id="header">
@@ -19,12 +17,7 @@ function App() {
             Inserir <code>botao</code> pra ir a tela da tabela
           </p>
         </div>
-        <button
-          className="counter"
-          onClick={() => setCount((count) => count + 2)}
-        >
-          Count is {count}
-        </button>
+        <Button text='Clique aqui'/>
       </section>
 
       <div className="ticks"></div>
