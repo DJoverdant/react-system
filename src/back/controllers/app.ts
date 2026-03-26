@@ -10,25 +10,25 @@ app.get('/users', async (_, res) => {
     const result = await db.query('SELECT * FROM client.data WHERE deleted_at IS NULL;');
     res.status(200).json(result.rows);
   } catch (err: any) {
-    res.status(500).send(err.message);
+    res.status(500).json({ error: err.message });
   }
 });
 
-app.delete('/users/:user_id', async (req, res) => {  
-  const {user_id} = req.params;
-  
+app.delete('/users/:user_id', async (req, res) => {
+  const { user_id } = req.params;
+
   try {
     await db.query('UPDATE client.data SET deleted_at = NOW() WHERE user_id = $1;', [user_id]);
     res.status(204);
   } catch (err: any) {
-    res.status(500).send(err.message);
+    res.status(500).json({ error: err.message });
   }
 });
 
 app.post('/users', async (req, res) => {
-  let data = req.body;
+  const data = req.body;
 
-  const newUser = { 
+  const newUser = {
     name: data.name,
     cpf: data.cpf,
     age: data.age,
@@ -46,27 +46,27 @@ app.post('/users', async (req, res) => {
           email \
         ) \
         VALUES($1, $2, $3, $4, $5) \
-        RETURNING user_id;', 
+        RETURNING user_id;',
       [
-        newUser.name, 
-        newUser.cpf, 
-        newUser.age, 
-        newUser.telephone, 
+        newUser.name,
+        newUser.cpf,
+        newUser.age,
+        newUser.telephone,
         newUser.email
       ]);
 
     res.status(201).json({ UserID: result.rows[0].user_id });
   }
   catch (err: any) {
-    res.status(500).send(err.message);
+    res.status(500).json({ error: err.message });
   }
 });
 
 app.patch('/users/:user_id', async (req, res) => {
-  const {user_id} = req.params;
-  let data = req.body;
+  const { user_id } = req.params;
+  const data = req.body;
 
-  const newUser = { 
+  const newUser = {
     name: data.name,
     cpf: data.cpf,
     age: data.age,
@@ -86,18 +86,18 @@ app.patch('/users/:user_id', async (req, res) => {
         WHERE \
           user_id = $1;',
       [
-        user_id, 
-        newUser.name, 
-        newUser.cpf, 
-        newUser.age, 
-        newUser.telephone, 
+        user_id,
+        newUser.name,
+        newUser.cpf,
+        newUser.age,
+        newUser.telephone,
         newUser.email
       ]);
 
     res.status(204).json();
   }
   catch (err: any) {
-    res.status(500).send(err.message);
+    res.status(500).json({ error: err.message });
   }
 });
 
