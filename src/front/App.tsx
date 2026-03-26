@@ -1,4 +1,5 @@
 import Button from './components/Button'
+import Link from './components/Link'
 import './styles/global.css'
 
 function App() {
@@ -31,28 +32,10 @@ function App() {
           <p>Follow me</p>
           <ul>
             <li>
-              <a href="https://github.com/DJoverdant" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/src/front/assets/icons.svg#github"></use>
-                </svg>
-                GitHub
-              </a>
+              <Link ref='https://github.com/DJoverdant' icon='/src/front/assets/icons.svg#github' text='Github'/>
             </li>
             <li>
-              <a href="https://instagram.com/andre_19z" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/src/front/assets/icons.svg#instagram"></use>
-                </svg>
-                Instagram
-              </a>
+              <Link ref='https://instagram.com/andre_19z' icon='/src/front/assets/icons.svg#instagram' text='Instagram'/>
             </li>
           </ul>
         </div>
