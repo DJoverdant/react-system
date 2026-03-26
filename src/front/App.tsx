@@ -7,7 +7,7 @@ function App() {
     <>
       <section id="header">
         <div>
-          
+
         </div>
       </section>
 
@@ -18,30 +18,27 @@ function App() {
             Inserir <code>botao</code> pra ir a tela da tabela
           </p>
         </div>
-        <Button text='Clique aqui'/>
+        <Button text='Clique aqui' />
       </section>
-
-      <div className="ticks"></div>
 
       <section id="foot">
         <div id="social">
           <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
+            <use href="/src/front/assets/icons.svg#user"></use>
           </svg>
           <h2>Socials</h2>
           <p>Follow me</p>
           <ul>
             <li>
-              <Link ref='https://github.com/DJoverdant' icon='/src/front/assets/icons.svg#github' text='Github'/>
+              <Link ref='https://github.com/DJoverdant' icon='/src/front/assets/icons.svg#github' text='Github' />
             </li>
             <li>
-              <Link ref='https://instagram.com/andre_19z' icon='/src/front/assets/icons.svg#instagram' text='Instagram'/>
+              <Link ref='https://instagram.com/andre_19z' icon='/src/front/assets/icons.svg#instagram' text='Instagram' />
             </li>
           </ul>
         </div>
       </section>
 
-      <div className="ticks"></div>
       <section id="spacer"></section>
     </>
   )
