@@ -1,6 +1,7 @@
 .ONESHELL:
 SHELL := /bin/bash
 CONTAINER=postgres
+SQL_FILE=src/migration/0001_create_data_tables.up.sql
 
 include .env
 
@@ -11,22 +12,10 @@ init: container
 	npm install 
 	
 	echo "Creating database $(DB_NAME)..."
-	docker exec -i $(CONTAINER) psql -U $(DB_USER) -d postgres -c "DROP DATABASE IF EXISTS $(DB_NAME);" &>/dev/null
-	docker exec -i $(CONTAINER) psql -U $(DB_USER) -d postgres -c "CREATE DATABASE $(DB_NAME);" &>/dev/null
+	docker exec -i $(CONTAINER) psql -U $(DB_USER) -d postgres -c "DROP DATABASE IF EXISTS $(DB_NAME);" 
+	docker exec -i $(CONTAINER) psql -U $(DB_USER) -d postgres -c "CREATE DATABASE $(DB_NAME);" 
+	docker exec -i $(CONTAINER) psql -U $(DB_USER) -d $(DB_NAME) < $(SQL_FILE) 
 
-	docker exec -i $(CONTAINER) psql -U $(DB_USER) -d $(DB_NAME) -c "
-		CREATE SCHEMA IF NOT EXISTS \"client\";
-		CREATE TABLE IF NOT EXISTS \"client\".\"data\" (
-			user_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-			name TEXT NOT NULL,
-			cpf TEXT NOT NULL,
-			age INTEGER NOT NULL,
-			telephone TEXT,
-			email TEXT,
-			created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-			deleted_at TIMESTAMPTZ
-		); 
-	" &>/dev/null
 	@echo "Done!"
 
 .PHONY: run
