@@ -1,14 +1,13 @@
-import Button from './components/Button'
-import Link from './components/Link'
-import './styles/global.css'
+import Button from "./components/Button";
+import Link from "./components/Link";
+import Table from "./components/Table";
+import "./styles/global.css";
 
 function App() {
   return (
     <>
       <section id="header">
-        <div>
-
-        </div>
+        <div></div>
       </section>
 
       <section id="canva">
@@ -18,7 +17,8 @@ function App() {
             Inserir <code>botao</code> pra ir a tela da tabela
           </p>
         </div>
-        <Button text='Clique aqui' />
+        <Table />
+        <Button text="Clique aqui" />
       </section>
 
       <section id="foot">
@@ -30,10 +30,18 @@ function App() {
           <p>Follow me</p>
           <ul>
             <li>
-              <Link ref='https://github.com/DJoverdant' icon='/src/front/assets/icons.svg#github' text='Github' />
+              <Link
+                ref="https://github.com/DJoverdant"
+                icon="/src/front/assets/icons.svg#github"
+                text="Github"
+              />
             </li>
             <li>
-              <Link ref='https://instagram.com/andre_19z' icon='/src/front/assets/icons.svg#instagram' text='Instagram' />
+              <Link
+                ref="https://instagram.com/andre_19z"
+                icon="/src/front/assets/icons.svg#instagram"
+                text="Instagram"
+              />
             </li>
           </ul>
         </div>
@@ -41,7 +49,7 @@ function App() {
 
       <section id="spacer"></section>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
