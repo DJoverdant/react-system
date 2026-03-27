@@ -1,8 +1,13 @@
 import express from 'express';
-import { db } from '../config';
-const app = express();
-const PORT = 5100;
+import cors from 'cors';
+import { db, PORT } from '../config';
 
+const app = express();
+
+app.use(cors({
+  origin: 'http://localhost:5173',   
+  credentials: true,                 
+}));
 app.use(express.json());
 
 app.get('/users', async (_, res) => {
@@ -37,23 +42,14 @@ app.post('/users', async (req, res) => {
   };
 
   try {
-    const result = await db.query('\
-        INSERT INTO client.data( \
-          name, \
-          cpf, \
-          age, \
-          telephone, \
-          email \
-        ) \
-        VALUES($1, $2, $3, $4, $5) \
-        RETURNING user_id;',
-      [
-        newUser.name,
-        newUser.cpf,
-        newUser.age,
-        newUser.telephone,
-        newUser.email
-      ]);
+    const result = await db.query('INSERT INTO client.data(name, cpf, age, telephone, email) VALUES($1, $2, $3, $4, $5) RETURNING user_id;',
+    [
+      newUser.name,
+      newUser.cpf,
+      newUser.age,
+      newUser.telephone,
+      newUser.email
+    ]);
 
     res.status(201).json({ UserID: result.rows[0].user_id });
   }
@@ -75,24 +71,15 @@ app.patch('/users/:user_id', async (req, res) => {
   };
 
   try {
-    await db.query('\
-        UPDATE client.data \
-        SET \
-          name = $2, \
-          cpf = $3, \
-          age = $4, \
-          telephone = $5, \
-          email = $6 \
-        WHERE \
-          user_id = $1;',
-      [
-        user_id,
-        newUser.name,
-        newUser.cpf,
-        newUser.age,
-        newUser.telephone,
-        newUser.email
-      ]);
+    await db.query('UPDATE client.data SET name = $2, cpf = $3, age = $4, telephone = $5, email = $6 WHERE user_id = $1;',
+    [
+      user_id,
+      newUser.name,
+      newUser.cpf,
+      newUser.age,
+      newUser.telephone,
+      newUser.email
+    ]);
 
     res.status(204).json();
   }

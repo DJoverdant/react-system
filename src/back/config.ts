@@ -9,9 +9,11 @@ const dsn = new Pool({
   port: Number(process.env.DB_PORT),
   user: process.env.DB_USER,
   password: String(process.env.DB_PASSWORD),
-  database: process.env.DATABASE,
+  database: process.env.DB_NAME,
 });
 
 export const db = {
   query: (text: string, params?: any[]) => dsn.query(text, params),
 };
+
+export const PORT = 5100;

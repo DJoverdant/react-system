@@ -1,7 +1,9 @@
 .box {
-  width: 250px;
+  min-height: 80%;
+  width: 80%;
   background: rgb(44, 44, 44);
-  font-family: "Courier New", Courier, monospace;
+  font-family: var(--mono);
+  font-weight: bold;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
   border-bottom-left-radius: 4px;
@@ -11,26 +13,28 @@
 
 .table {
   font-size: 0.8rem;
-  color: var(--light-purple);
+  color: rgb(255, 255, 255);
   display: flex;
-  justify-content: space-between;
-  border-right: 1px solid rgb(203, 203, 203);
-  border-left: 1px solid rgb(203, 203, 203);
-  border-bottom: 1px solid rgb(203, 203, 203);
+  flex-direction: column;
+  max-height: 100%;
+  overflow-y: auto;
 }
 
 .card {
-  width: 50%;
-  border-right: 1px solid rgb(203, 203, 203);
+  display: flex;
+  width: 100%;
+  border: 1px solid var(--shadow);
   text-align: center;
-
-  .item {
-    background-color: rgb(25, 25, 25);
-    padding: 3px 0;
-    padding-left: 0.8em;
-  }
 }
 
-.item:nth-child(even) {
+.item {
+  background-color: rgb(25, 25, 25);
+  padding: 3px 0;
+  padding-left: 0.8em;
+  flex: 1;
+  min-width: 0;
+}
+
+.card:nth-child(even) .item {
   background: rgb(58, 58, 58);
 }

@@ -22,8 +22,9 @@ init: container
 run: container
 	@
 		clear
-
-		npx tsx src/back/controllers/app.ts
+		npx tsx src/back/controllers/app.ts &
+		sleep 1
+		npm run dev
 	@
 
 .PHONY: container

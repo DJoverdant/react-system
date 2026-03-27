@@ -1,6 +1,6 @@
+import Table from "./components/Table";
 import Button from "./components/Button";
 import Link from "./components/Link";
-import Table from "./components/Table";
 import "./styles/global.css";
 
 function App() {
@@ -11,14 +11,7 @@ function App() {
       </section>
 
       <section id="canva">
-        <div>
-          <h1>Bem vindo</h1>
-          <p>
-            Inserir <code>botao</code> pra ir a tela da tabela
-          </p>
-        </div>
         <Table />
-        <Button text="Clique aqui" />
       </section>
 
       <section id="foot">

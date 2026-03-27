@@ -1,6 +1,8 @@
 import "./styles.css";
 
-interface ButtonProps { text: string; };
+interface ButtonProps {
+  text: string;
+}
 
 function Button({ text }: ButtonProps) {
   return (
