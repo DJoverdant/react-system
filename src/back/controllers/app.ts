@@ -24,7 +24,7 @@ app.delete('/users/:user_id', async (req, res) => {
 
   try {
     await db.query('UPDATE client.data SET deleted_at = NOW() WHERE user_id = $1;', [user_id]);
-    res.status(204);
+    res.status(204).json();
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }

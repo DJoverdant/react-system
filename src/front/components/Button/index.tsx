@@ -2,11 +2,12 @@ import "./styles.css";
 
 interface ButtonProps {
   text: string;
+  onClick: () => void;
 }
 
-function Button({ text }: ButtonProps) {
+function Button({ text, onClick }: ButtonProps) {
   return (
-    <button className="button">
+    <button className="button" onClick={onClick}>
       <span>{text}</span>
     </button>
   );

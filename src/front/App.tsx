@@ -1,5 +1,5 @@
-import Table from "./components/Table";
-import Button from "./components/Button";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./routes/home/user";
 import Link from "./components/Link";
 import "./styles/global.css";
 
@@ -10,9 +10,12 @@ function App() {
         <div></div>
       </section>
 
-      <section id="canva">
-        <Table />
-      </section>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="*" element={<h1>404</h1>} />
+        </Routes>
+      </BrowserRouter>
 
       <section id="foot">
         <div id="social">

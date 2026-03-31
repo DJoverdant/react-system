@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import Button from "../Button";
 import "./styles.css";
 
-interface User {
+export interface User {
   user_id: string;
   name: string;
   cpf: string;
@@ -11,26 +12,12 @@ interface User {
   created_at: string;
 }
 
-function Table() {
-  const [user, setData] = useState<User[]>([]);
+interface TableProps {
+  data: User[];
+  onDelete: (id: string) => void;
+}
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("http://localhost:5100/users", {
-          method: "GET",
-          credentials: "include",
-          headers: { "Content-Type": "application/json" },
-        });
-        const json = await response.json();
-        setData(json);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchData();
-  }, []);
-
+export function Table({ data, onDelete }: TableProps) {
   return (
     <div className="box">
       <div className="table">
@@ -58,8 +45,8 @@ function Table() {
           </ul>
         </div>
 
-        {user.map((user) => (
-          <div className="card">
+        {data.map((user) => (
+          <div className="card" key={user.user_id}>
             <ul className="item">
               <li>{user.user_id}</li>
             </ul>
@@ -81,11 +68,20 @@ function Table() {
             <ul className="item">
               <li>{user.created_at}</li>
             </ul>
+
+            <ul className="item">
+              <li>
+                {
+                  <Button
+                    text="Deletar"
+                    onClick={() => onDelete(user.user_id)}
+                  />
+                }
+              </li>
+            </ul>
           </div>
         ))}
       </div>
     </div>
   );
 }
-
-export default Table;
