@@ -1,9 +1,12 @@
 import { Table, type User } from "../../components/Table";
+import { UserActionsContext } from "../../contexts/UserActionsContext";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const [user, setUserData] = useState<User[]>([]);
   const [refresh, setRefresh] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,9 +42,17 @@ function Home() {
     }
   };
 
+  const handleUpdatePage = (id: string) => {
+    navigate(`/update/${id}`);
+  };
+
   return (
     <section id="canva">
-      <Table data={user} onDelete={handleDelete} />
+      <UserActionsContext.Provider
+        value={{ deleteUser: handleDelete, updateUser: handleUpdatePage }}
+      >
+        <Table data={user} />
+      </UserActionsContext.Provider>
     </section>
   );
 }

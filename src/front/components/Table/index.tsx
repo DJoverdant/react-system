@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useUserActions } from "../../contexts/UserActionsContext";
 import Button from "../Button";
 import "./styles.css";
 
@@ -14,10 +14,11 @@ export interface User {
 
 interface TableProps {
   data: User[];
-  onDelete: (id: string) => void;
 }
 
-export function Table({ data, onDelete }: TableProps) {
+export function Table({ data }: TableProps) {
+  const { deleteUser, updateUser } = useUserActions();
+
   return (
     <div className="box">
       <div className="table">
@@ -70,13 +71,15 @@ export function Table({ data, onDelete }: TableProps) {
             </ul>
 
             <ul className="item">
-              <li>
-                {
-                  <Button
-                    text="Deletar"
-                    onClick={() => onDelete(user.user_id)}
-                  />
-                }
+              <li style={{ display: "flex", gap: "0.5rem" }}>
+                <Button
+                  text="Atualizar"
+                  onClick={() => updateUser(user.user_id)}
+                />
+                <Button
+                  text="Deletar"
+                  onClick={() => deleteUser(user.user_id)}
+                />
               </li>
             </ul>
           </div>

@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./routes/home/user";
+import Update from "./routes/update";
 import Link from "./components/Link";
 import "./styles/global.css";
 
@@ -13,6 +14,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/update/:user_id" element={<Update />} />
           <Route path="*" element={<h1>404</h1>} />
         </Routes>
       </BrowserRouter>
