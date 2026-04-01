@@ -4,12 +4,13 @@ import "./styles.css";
 interface ButtonProps {
   text?: string;
   icon?: Icon;
+  disabled?: boolean;
   onClick: () => void;
 }
 
-function Button({ text, icon: Icon, onClick }: ButtonProps) {
+function Button({ text, icon: Icon, onClick, disabled }: ButtonProps) {
   return (
-    <button className="button" onClick={onClick}>
+    <button className="button" onClick={onClick} disabled={disabled}>
       <span>
         {text}
         {Icon && <Icon size={20} />}

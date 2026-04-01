@@ -1,24 +1,15 @@
 import { useUserActions } from "../../contexts/UserActionsContext";
 import { TrashIcon, PencilSimpleIcon } from "@phosphor-icons/react";
+import { type User } from "../../types/user";
 import Button from "../Button";
 import "./styles.css";
-
-export interface User {
-  user_id: string;
-  name: string;
-  cpf: string;
-  age: number;
-  telephone?: string;
-  email?: string;
-  created_at: string;
-}
 
 interface TableProps {
   data: User[];
 }
 
-export function Table({ data }: TableProps) {
-  const { deleteUser, updateUser } = useUserActions();
+function Table({ data }: TableProps) {
+  const { deleteUser, updateUserPage } = useUserActions();
 
   return (
     <div className="box">
@@ -75,7 +66,7 @@ export function Table({ data }: TableProps) {
               <li style={{ display: "flex", gap: "0.5rem" }}>
                 <Button
                   icon={PencilSimpleIcon}
-                  onClick={() => updateUser(user.user_id)}
+                  onClick={() => updateUserPage(user.user_id)}
                 />
                 <Button
                   icon={TrashIcon}
@@ -89,3 +80,5 @@ export function Table({ data }: TableProps) {
     </div>
   );
 }
+
+export default Table;

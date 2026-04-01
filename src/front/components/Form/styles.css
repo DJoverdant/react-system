@@ -1,0 +1,63 @@
+.form {
+  position: relative;
+  display: flex;
+  height: 50vh;
+  width: 20vw;
+  flex-direction: column;
+  gap: 10px;
+  padding: 40px;
+  background: linear-gradient(
+    to bottom,
+    var(--light-purple),
+    var(--light-purple-transparent)
+  );
+  border-radius: 10px;
+  overflow: hidden;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  transform: rotateX(-10deg);
+  transition: all 0.3s ease-in-out;
+  box-shadow: var(--shadow);
+  animation: form-animation 0.5s ease-in-out;
+}
+
+@keyframes form-animation {
+  from {
+    transform: rotateX(-30deg);
+    opacity: 0;
+  }
+
+  to {
+    transform: rotateX(0deg);
+    opacity: 1;
+  }
+}
+
+.input {
+  padding: 20px;
+  border-radius: 5px;
+  background-color: transparent;
+  transition:
+    border-color 0.3s ease-in-out,
+    background-color 0.3s ease-in-out,
+    transform 0.3s ease-in-out,
+    box-shadow 0.3s ease-in-out;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  font-size: 0.825rem;
+  color: #fff;
+  border: 2px solid #fff;
+  box-shadow: var(--shadow);
+
+  &::placeholder {
+    color: #fff;
+  }
+
+  &:hover {
+    border-color: var(--light-purple);
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05) rotateY(20deg);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+    outline: none;
+  }
+}

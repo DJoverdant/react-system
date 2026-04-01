@@ -1,8 +1,11 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, type ReactNode } from "react";
 
 export interface UserActionsContextType {
   deleteUser: (id: string) => void;
-  updateUser: (id: string) => void;
+  updateUserPage: (id: string) => void;
+  createUserPage: (id: string) => void;
+  updateUser: (formData: Record<string, any>) => Promise<void>;
+  createUser: (formData: Record<string, any>) => Promise<void>;
 }
 
 export const UserActionsContext = createContext<UserActionsContextType | null>(
@@ -17,4 +20,18 @@ export function useUserActions() {
     );
   }
   return context;
+}
+
+export function UserActionsProvider({
+  children,
+  value,
+}: {
+  children: ReactNode;
+  value: UserActionsContextType;
+}) {
+  return (
+    <UserActionsContext.Provider value={value}>
+      {children}
+    </UserActionsContext.Provider>
+  );
 }

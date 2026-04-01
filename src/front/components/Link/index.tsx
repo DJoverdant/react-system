@@ -1,17 +1,16 @@
+import { type Icon } from "@phosphor-icons/react";
 import "./styles.css";
 
 interface LinkProps {
   ref: string;
-  icon?: string;
+  icon?: Icon;
   text?: string;
 }
 
-function Link({ ref, icon, text }: LinkProps) {
+function Link({ ref, icon: Icon, text }: LinkProps) {
   return (
     <a href={ref} target="_blank">
-      <svg className="link" role="presentation" aria-hidden="true">
-        <use href={icon}></use>
-      </svg>
+      {Icon && <Icon size={20} />}
       {text}
     </a>
   );

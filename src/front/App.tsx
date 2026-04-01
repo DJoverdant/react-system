@@ -1,4 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  UserPlusIcon,
+  GithubLogoIcon,
+  InstagramLogoIcon,
+} from "@phosphor-icons/react";
 import Home from "./routes/home/user";
 import Update from "./routes/update";
 import Link from "./components/Link";
@@ -21,23 +26,21 @@ function App() {
 
       <section id="foot">
         <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/src/front/assets/icons.svg#user"></use>
-          </svg>
+          <UserPlusIcon className="icon" size={60} />
           <h2>Socials</h2>
           <p>Follow me</p>
           <ul>
             <li>
               <Link
                 ref="https://github.com/DJoverdant"
-                icon="/src/front/assets/icons.svg#github"
+                icon={GithubLogoIcon}
                 text="Github"
               />
             </li>
             <li>
               <Link
                 ref="https://instagram.com/andre_19z"
-                icon="/src/front/assets/icons.svg#instagram"
+                icon={InstagramLogoIcon}
                 text="Instagram"
               />
             </li>

@@ -1,38 +1,75 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { UserActionsContext } from "../../contexts/UserActionsContext";
-import { useState, useEffect } from "react";
+import { UserActionsProvider } from "../../contexts/UserActionsContext";
+import { useState } from "react";
+import { WarningIcon } from "@phosphor-icons/react";
+import Form from "../../components/Form";
+import Modal from "../../components/Modal";
 
 function UpdateUser() {
   const { user_id } = useParams<{ user_id: string }>();
-
-  const [refresh, setRefresh] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchUpdate = async () => {
-      try {
-        const response = await fetch(`http://localhost:5100/users/${user_id}`, {
-          method: "PATCH",
-          credentials: "include",
-          headers: { "Content-Type": "application/json" },
-        });
+  const handleUpdate = async (formData: Record<string, any>) => {
+    if (!user_id) return;
+    try {
+      setIsLoading(true);
+      const response = await fetch(`http://localhost:5100/users/${user_id}`, {
+        method: "PATCH",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-        if (response.ok) {
-          setRefresh((prev) => prev + 1);
+      if (response.ok) {
+        setError(false);
+        navigate("/");
+      } else {
+        setError(true);
+        try {
+          const errorData = await response.json();
+          setErrorMessage(errorData.error);
+        } catch {
+          setErrorMessage("Erro ao atualizar usuário");
         }
-      } catch (err) {
-        console.error(err);
       }
-    };
-    fetchUpdate();
-  }, [refresh]);
+    } catch (err) {
+      setError(true);
+      setErrorMessage("Erro na conexão");
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleCloseError = () => {
+    setError(false);
+  };
 
   return (
-    <section id="canva">
-      <UserActionsContext.Provider
-        value={{ updateUser: handleUpdate }}
-      ></UserActionsContext.Provider>
-    </section>
+    <UserActionsProvider
+      value={{
+        deleteUser: () => {},
+        updateUser: handleUpdate,
+        createUser: async () => {},
+        updateUserPage: () => {},
+        createUserPage: () => {},
+      }}
+    >
+      <section id="canva">
+        <Form isLoading={isLoading} />
+        {isError && (
+          <Modal
+            title="Erro"
+            description={errorMessage}
+            icon={WarningIcon}
+            onConfirm={handleCloseError}
+          />
+        )}
+      </section>
+    </UserActionsProvider>
   );
 }
 
