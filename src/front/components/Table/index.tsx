@@ -1,4 +1,5 @@
 import { useUserActions } from "../../contexts/UserActionsContext";
+import { TrashIcon, PencilSimpleIcon } from "@phosphor-icons/react";
 import Button from "../Button";
 import "./styles.css";
 
@@ -73,11 +74,11 @@ export function Table({ data }: TableProps) {
             <ul className="item">
               <li style={{ display: "flex", gap: "0.5rem" }}>
                 <Button
-                  text="Atualizar"
+                  icon={PencilSimpleIcon}
                   onClick={() => updateUser(user.user_id)}
                 />
                 <Button
-                  text="Deletar"
+                  icon={TrashIcon}
                   onClick={() => deleteUser(user.user_id)}
                 />
               </li>

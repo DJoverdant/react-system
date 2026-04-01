@@ -1,7 +1,6 @@
 .box {
   min-height: 80%;
-  width: 80%;
-  background: rgb(44, 44, 44);
+  width: 90%;
   font-family: var(--mono);
   font-weight: bold;
   border-top-left-radius: 12px;
@@ -28,7 +27,7 @@
 }
 
 .item {
-  background-color: rgb(25, 25, 25);
+  background-color: var(--table-bg);
   padding: 3px 0;
   padding-left: 0.8em;
   flex: 1;
@@ -36,5 +35,5 @@
 }
 
 .card:nth-child(even) .item {
-  background: rgb(58, 58, 58);
+  background: var(--border);
 }
