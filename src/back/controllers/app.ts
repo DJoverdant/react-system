@@ -111,22 +111,22 @@ app.patch("/users/:user_id", async (req, res) => {
     email: data.email,
   };
 
-  if (updateUser.name === "") {
+  if (!updateUser.name) {
     res.status(400).json({ error: "Campo nome não pode estar vazio!" });
     return;
   }
-  if (updateUser.cpf === "") {
+  if (!updateUser.cpf) {
     res.status(400).json({ error: "Campo cpf não pode estar vazio!" });
     return;
   }
-  if (updateUser.age === "") {
+  if (!updateUser.age) {
     res.status(400).json({ error: "Campo idade não pode estar vazio!" });
     return;
   }
-  if (updateUser.telephone === "") {
+  if (!updateUser.telephone) {
     updateUser.telephone = null;
   }
-  if (updateUser.email === "") {
+  if (!updateUser.email) {
     updateUser.email = null;
   }
 
