@@ -1,32 +1,56 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import {
+  HouseIcon,
   UserPlusIcon,
+  ThreadsLogoIcon,
   GithubLogoIcon,
   InstagramLogoIcon,
 } from "@phosphor-icons/react";
-import Home from "./routes/home/user";
+import Home from "./routes/home";
 import Update from "./routes/update";
+import Create from "./routes/create";
+import Button from "./components/Button";
 import Link from "./components/Link";
 import "./styles/global.css";
 
+function Header() {
+  const navigate = useNavigate();
+
+  const handleHomePage = () => {
+    navigate("/");
+  };
+
+  const handleCreatePage = () => {
+    navigate("/create");
+  };
+
+  return (
+    <section id="header">
+      <div>
+        <Button icon={HouseIcon} onClick={handleHomePage} />
+      </div>
+      <div>
+        <Button icon={UserPlusIcon} text="Novo" onClick={handleCreatePage} />
+      </div>
+    </section>
+  );
+}
+
 function App() {
   return (
-    <>
-      <section id="header">
-        <div></div>
-      </section>
+    <BrowserRouter>
+      <Header />
 
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/update/:user_id" element={<Update />} />
-          <Route path="*" element={<h1>404</h1>} />
-        </Routes>
-      </BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/update/:user_id" element={<Update />} />
+        <Route path="/create" element={<Create />} />
+        <Route path="*" element={<h1>404</h1>} />
+      </Routes>
 
       <section id="foot">
         <div id="social">
-          <UserPlusIcon className="icon" size={60} />
+          <ThreadsLogoIcon className="icon" />
           <h2>Socials</h2>
           <p>Follow me</p>
           <ul>
@@ -49,7 +73,7 @@ function App() {
       </section>
 
       <section id="spacer"></section>
-    </>
+    </BrowserRouter>
   );
 }
 

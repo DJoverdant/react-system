@@ -1,6 +1,7 @@
 .box {
   min-height: 80%;
   width: 90%;
+  margin-bottom: 20px;
   font-family: var(--mono);
   font-weight: bold;
   border-top-left-radius: 12px;

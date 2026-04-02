@@ -92,10 +92,8 @@ function Home() {
       <UserActionsContext.Provider
         value={{
           deleteUser: handleDelete,
-          updateUser: async () => {},
-          createUser: async () => {},
+          createOrUpdateUser: async () => {},
           updateUserPage: handleUpdatePage,
-          createUserPage: handleUpdatePage,
         }}
       >
         <Table data={user} />

@@ -1,15 +1,22 @@
 import { useUserActions } from "../../contexts/UserActionsContext";
 import { PaperPlaneRightIcon } from "@phosphor-icons/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "../Button";
 import "./styles.css";
 
 interface FormProps {
   isLoading?: boolean;
+  initialData?: {
+    name: string;
+    email?: string;
+    telephone?: string;
+    age: string | number;
+    cpf: string;
+  };
 }
 
-function Form({ isLoading = false }: FormProps) {
-  const { updateUser } = useUserActions();
+function Form({ isLoading = false, initialData }: FormProps) {
+  const { createOrUpdateUser } = useUserActions();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -17,6 +24,18 @@ function Form({ isLoading = false }: FormProps) {
     age: "",
     cpf: "",
   });
+
+  useEffect(() => {
+    if (initialData) {
+      setFormData({
+        name: initialData.name || "",
+        email: initialData.email || "",
+        telephone: initialData.telephone || "",
+        age: initialData.age?.toString() || "",
+        cpf: initialData.cpf || "",
+      });
+    }
+  }, [initialData]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { placeholder, value } = e.target;
@@ -29,7 +48,7 @@ function Form({ isLoading = false }: FormProps) {
 
   const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
-    await updateUser(formData);
+    await createOrUpdateUser(formData);
   };
 
   return (

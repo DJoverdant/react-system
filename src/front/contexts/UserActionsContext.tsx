@@ -3,9 +3,7 @@ import { createContext, useContext, type ReactNode } from "react";
 export interface UserActionsContextType {
   deleteUser: (id: string) => void;
   updateUserPage: (id: string) => void;
-  createUserPage: (id: string) => void;
-  updateUser: (formData: Record<string, any>) => Promise<void>;
-  createUser: (formData: Record<string, any>) => Promise<void>;
+  createOrUpdateUser: (formData: Record<string, any>) => Promise<void>;
 }
 
 export const UserActionsContext = createContext<UserActionsContextType | null>(

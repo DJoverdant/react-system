@@ -18,15 +18,6 @@ init: container
 
 	@echo "Done!"
 
-.PHONY: run
-run: container
-	@
-		clear
-		npx tsx src/back/controllers/app.ts &
-		sleep 1
-		npm run dev
-	@
-
 .PHONY: container
 container:
 	@echo "Checking for $(CONTAINER) status..."

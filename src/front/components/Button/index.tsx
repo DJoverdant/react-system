@@ -11,9 +11,9 @@ interface ButtonProps {
 function Button({ text, icon: Icon, onClick, disabled }: ButtonProps) {
   return (
     <button className="button" onClick={onClick} disabled={disabled}>
-      <span>
-        {text}
-        {Icon && <Icon size={20} />}
+      <span className="button-content">
+        {Icon && <Icon size={20} style={{ verticalAlign: "middle" }} />}
+        {text && <span className="button-text">{text}</span>}
       </span>
     </button>
   );

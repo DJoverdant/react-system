@@ -11,7 +11,7 @@ function Link({ ref, icon: Icon, text }: LinkProps) {
   return (
     <a href={ref} target="_blank">
       {Icon && <Icon size={20} />}
-      {text}
+      {text && text}
     </a>
   );
 }

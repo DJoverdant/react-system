@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { UserActionsProvider } from "../../contexts/UserActionsContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { WarningIcon } from "@phosphor-icons/react";
 import Form from "../../components/Form";
 import Modal from "../../components/Modal";
@@ -8,9 +8,43 @@ import Modal from "../../components/Modal";
 function UpdateUser() {
   const { user_id } = useParams<{ user_id: string }>();
   const [isLoading, setIsLoading] = useState(false);
+  const [isGetError, setGetError] = useState(false);
   const [isError, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [userData, setUserData] = useState<any>(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user_id) return;
+    const fetchUser = async () => {
+      try {
+        const response = await fetch(`http://localhost:5100/users/${user_id}`, {
+          method: "GET",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          if (data.length > 0) {
+            setUserData(data[0]);
+          } else {
+            setError(true);
+            setErrorMessage("Usuário não encontrado");
+            setGetError(true);
+          }
+        } else {
+          setError(true);
+          setErrorMessage("Erro ao carregar dados do usuário");
+        }
+      } catch (err) {
+        setError(true);
+        setErrorMessage("Erro na conexão");
+        console.error(err);
+      }
+    };
+    fetchUser();
+  }, [user_id]);
 
   const handleUpdate = async (formData: Record<string, any>) => {
     if (!user_id) return;
@@ -46,20 +80,22 @@ function UpdateUser() {
 
   const handleCloseError = () => {
     setError(false);
+    if (isGetError) {
+      navigate("/");
+    }
   };
 
   return (
     <UserActionsProvider
       value={{
         deleteUser: () => {},
-        updateUser: handleUpdate,
-        createUser: async () => {},
+        createOrUpdateUser: handleUpdate,
         updateUserPage: () => {},
-        createUserPage: () => {},
       }}
     >
       <section id="canva">
-        <Form isLoading={isLoading} />
+        <p id="form-title">Atualizar dados</p>
+        <Form isLoading={isLoading} initialData={userData} />
         {isError && (
           <Modal
             title="Erro"
